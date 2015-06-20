@@ -18,8 +18,18 @@
 (define-condition triangle-error  (error) ())
 
 (defun triangle (a b c)
-  :write-me)
-
+  (let* ((sorted (sort (list a b c) #'<))
+	 (low (nth 0 sorted))
+	 (med (nth 1 sorted))
+	 (high (nth 2 sorted)))
+    (if (<= (+ low med) high)
+  	(error 'triangle-error)
+  	(if (= low high)
+  	    :equilateral
+  	    (if (or (= low med)
+  		    (= med high))
+  		:isosceles
+  		:scalene)))))
 
 (define-test test-equilateral-triangles-have-equal-sides
     (assert-equal :equilateral (triangle 2 2 2))
