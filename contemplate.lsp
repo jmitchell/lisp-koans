@@ -128,6 +128,7 @@
   (format t "  last koan status: ~A~%" koan-status)
   "")
 
+
 (defun print-next-suggestion-message ()
   (let ((filename (get-error-filename *collected-results*))
         (koan-name (get-error-koan-name *collected-results*))

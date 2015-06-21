@@ -50,8 +50,24 @@
 ; Your goal is to write the score method.
 
 (defun score (dice)
-  ; You need to write this method
-)
+  (let ((histogram (make-hash-table))
+	(points 0))
+    (dolist (die dice)
+      (incf (gethash die histogram 0)))
+    (if (>= (gethash 1 histogram 0) 3)
+	(progn
+	  (incf points 1000)
+	  (decf (gethash 1 histogram 0) 3)))
+    (loop
+       for die-val being the hash-keys in histogram
+       using (hash-value count)
+       when (>= count 3)
+       do
+    	 (incf points (* 100 die-val))
+    	 (decf (gethash die-val histogram) 3))
+    (incf points (* 100 (gethash 1 histogram 0)))
+    (incf points (* 50 (gethash 5 histogram 0)))
+    points))
 
 (define-test test-score-of-an-empty-list-is-zero
     (assert-equal 0 (score nil)))
